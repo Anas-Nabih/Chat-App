@@ -1,4 +1,4 @@
-import 'package:chat_app/login_page.dart';
+import 'package:chat_app/ui/user/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

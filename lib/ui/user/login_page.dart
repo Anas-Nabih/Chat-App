@@ -1,13 +1,14 @@
+import 'package:chat_app/commanUtils/navigator_uutils.dart';
 import 'package:chat_app/const/colors.dart';
-import 'package:chat_app/login_page.dart';
+import 'package:chat_app/ui/user/register_page.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class RegisterPage extends StatelessWidget {
-    RegisterPage({Key? key}) : super(key: key);
+class LoginPage extends StatelessWidget {
+  LoginPage({Key? key}) : super(key: key);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -38,21 +39,21 @@ class RegisterPage extends StatelessWidget {
                   ],
                 )),
             SizedBox(height: 8.h),
-            CustomBtn(text: "Sigin Up"),
+            CustomBtn(text: "Sigin in"),
             SizedBox(height: 4.h),
             GestureDetector(
-              onTap: ()=>Navigator.push(context, CupertinoPageRoute(builder: (context) => LoginPage(),)),
+              onTap: ()=>NavigatorUtils.push(context, RegisterPage()),
               child: Text.rich(TextSpan(
-                  text:"already have an account?\t" ,
-                  style: TextStyle(
+                text:"don't have an account?\t" ,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w400),
+                children: [
+                  TextSpan(text: "Sigin Up",style: TextStyle(
                       color: Colors.white,
-                      fontSize: 11.sp,
-                      fontWeight: FontWeight.w400),
-                  children: [
-                    TextSpan(text: "Sigin in",style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600))
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600))
                   ]
               )),
             ),
@@ -63,3 +64,7 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
+
+
+
+
