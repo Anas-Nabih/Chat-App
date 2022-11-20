@@ -1,5 +1,7 @@
 import 'package:chat_app/commanUtils/navigator_uutils.dart';
-import 'package:chat_app/const/colors.dart';
+import 'package:chat_app/commanUtils/const.dart';
+import 'package:chat_app/commanUtils/utils.dart';
+import 'package:chat_app/res/colors.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_text_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,18 +38,42 @@ class RegisterPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomTextFormField(
-                        onChanged: (val) => email = val, hintText: "Email"),
+                        onChanged: (val) => email = val,
+                        validation: (val){
+                          if(val!.isEmpty) {
+                            return "Please Enter Your Email";
+                          }
+                        },
+                        hintText: "Email"),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                         onChanged: (val) => password = val,
+                        validation: (val){
+                          if(val!.isEmpty) {
+                            return "Please Enter Your Password";
+                          }else if(val!.length < 6){
+
+                          }return "Password at least should be +6 chars";
+                        },
                         hintText: "Password")
                   ],
                 )),
             SizedBox(height: 8.h),
-            CustomBtn(text: "Sigin Up",onTapped: ()async{
-              UserCredential user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email!, password: password!);
-              print(user.user!.email);
-            }),
+            CustomBtn(
+                text: "Sigin Up",
+                onTapped: () async {
+                  if(_formKey.currentState!.validate()){
+                    try{
+                      await registerUserWithEmailAndPassword();
+                      Utils.showSnackBar(context: context, msg: "Login Successfully");
+                    }on FirebaseAuthException catch(e){
+                      registerException(e, context);
+                    }catch (e){
+                      Utils.showSnackBar(context: context, msg:e.toString());
+                    }
+                  }
+
+                }),
             SizedBox(height: 4.h),
             GestureDetector(
               onTap: () => NavigatorUtils.pop(context),
@@ -70,5 +96,19 @@ class RegisterPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void registerException(FirebaseAuthException e, BuildContext context) {
+    if (e.code == CONST.weakPassword) {
+      Utils.showSnackBar(context: context, msg: 'The password provided is too weak.');
+    } else if (e.code == CONST.emailAlreadyUsed) {
+      Utils.showSnackBar(context: context, msg: 'The account already exists for that email.');
+      }
+  }
+
+  Future<void> registerUserWithEmailAndPassword() async {
+     UserCredential user = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+        email: email!, password: password!);
   }
 }

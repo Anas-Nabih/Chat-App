@@ -1,5 +1,5 @@
 import 'package:chat_app/commanUtils/navigator_uutils.dart';
-import 'package:chat_app/const/colors.dart';
+import 'package:chat_app/res/colors.dart';
 import 'package:chat_app/ui/user/register_page.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_text_form_field.dart';
