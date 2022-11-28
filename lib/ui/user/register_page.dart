@@ -1,5 +1,4 @@
-import 'package:chat_app/commanUtils/navigator_uutils.dart';
-import 'package:chat_app/commanUtils/const.dart';
+ import 'package:chat_app/commanUtils/const.dart';
 import 'package:chat_app/commanUtils/utils.dart';
 import 'package:chat_app/res/colors.dart';
 import 'package:chat_app/widgets/custom_button.dart';
@@ -92,7 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   }),
               SizedBox(height: 4.h),
               GestureDetector(
-                onTap: () => NavigatorUtils.pop(context),
+                onTap: () => Utils.pop(context),
                 child: Text.rich(TextSpan(
                     text: "already have an account?\t",
                     style: TextStyle(

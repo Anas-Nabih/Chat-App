@@ -1,7 +1,7 @@
 import 'package:chat_app/commanUtils/const.dart';
-import 'package:chat_app/commanUtils/navigator_uutils.dart';
-import 'package:chat_app/commanUtils/utils.dart';
+ import 'package:chat_app/commanUtils/utils.dart';
 import 'package:chat_app/res/colors.dart';
+import 'package:chat_app/ui/chat_screen/chat_screen.dart';
 import 'package:chat_app/ui/user/register_page.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_text_form_field.dart';
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
               }),
               SizedBox(height: 4.h),
               GestureDetector(
-                onTap: () => NavigatorUtils.push(context, RegisterPage()),
+                onTap: () => Utils.push(context: context,navigationScreen:  RegisterPage()),
                 child: Text.rich(TextSpan(
                     text: "don't have an account?\t",
                     style: TextStyle(
@@ -114,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
     UserCredential user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email!, password: password!);
     print(user.user!.email);
     Utils.showSnackBar(context: context, msg: "login Successfully");
+    Utils.push(context: context,navigationScreen:  ChatScreen(),replace: true);
   }
 
   void loginException(FirebaseAuthException e, BuildContext context) {

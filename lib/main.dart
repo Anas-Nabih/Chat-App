@@ -1,3 +1,4 @@
+import 'package:chat_app/ui/chat_screen/chat_screen.dart';
 import 'package:chat_app/ui/user/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,11 @@ class ChatApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) =>  MaterialApp(
         title: 'Chat App',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginPage(),
+        home: ChatScreen(),
       ),
     );
   }
