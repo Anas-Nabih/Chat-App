@@ -1,3 +1,4 @@
+import 'package:chat_app/commanUtils/const.dart';
 import 'package:chat_app/res/colors.dart';
 import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,13 +9,12 @@ import 'package:sizer/sizer.dart';
 class ChatScreen extends StatelessWidget {
   ChatScreen({Key? key}) : super(key: key);
 
-
-
-  CollectionReference messages = FirebaseFirestore.instance.collection("messages");
+  String msgTime = DateFormat.jm().format(DateTime.now());
+  final TextEditingController _controller = TextEditingController();
+  CollectionReference messages = FirebaseFirestore.instance.collection(CONST.messagesCollection);
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Chat"),
@@ -32,6 +32,14 @@ class ChatScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.w),
             child: TextField(
+              controller: _controller,
+              onSubmitted: (val){
+                messages.add({
+                  "msg":val,
+                  "time":msgTime,
+                });
+                _controller.clear();
+              },
               decoration: InputDecoration(
                   hintText: "Send Message",
                   suffixIcon: Icon(Icons.send, color: MColors.primaryColor),

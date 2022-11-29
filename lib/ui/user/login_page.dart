@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:chat_app/commanUtils/const.dart';
+import 'package:chat_app/commanUtils/preference/perfs.dart';
  import 'package:chat_app/commanUtils/utils.dart';
 import 'package:chat_app/res/colors.dart';
+import 'package:chat_app/services/user_model.dart';
 import 'package:chat_app/ui/chat_screen/chat_screen.dart';
 import 'package:chat_app/ui/user/register_page.dart';
 import 'package:chat_app/widgets/custom_button.dart';
@@ -112,7 +116,14 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> loginWithEmailAndPassword(BuildContext context) async {
     UserCredential user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email!, password: password!);
-    print(user.user!.email);
+
+    Map<String, dynamic> currentUser = {
+      "name":user.user?.displayName ?? "null",
+      "email":user.user!.email ?? "null",
+      "img":user.user!.photoURL ?? "null",
+      "phone":user.user!.phoneNumber ?? "null",
+    };
+    Prefs.setCurrentUser(jsonEncode(UserModel.fromJson(currentUser)));
     Utils.showSnackBar(context: context, msg: "login Successfully");
     Utils.push(context: context,navigationScreen:  ChatScreen(),replace: true);
   }
