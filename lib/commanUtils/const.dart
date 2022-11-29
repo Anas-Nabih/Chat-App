@@ -9,4 +9,6 @@ class CONST{
   static const String wrongPassword = "wrong-password";
 
   static const String messagesCollection = "messages";
+  static const String usersCollection = "users";
+  static const String createdAt = "createdAt";
 }

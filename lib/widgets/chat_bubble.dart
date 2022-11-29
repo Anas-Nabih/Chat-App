@@ -1,3 +1,4 @@
+import 'package:chat_app/models/message_model.dart';
 import 'package:chat_app/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -5,7 +6,7 @@ import 'package:sizer/sizer.dart';
 class ChatBubble extends StatelessWidget {
   const ChatBubble({required this.msg});
 
-  final String msg;
+  final MessageModel msg;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +23,7 @@ class ChatBubble extends StatelessWidget {
               topRight: Radius.circular(12),
             )
         ),
-        child: Text(msg, style: TextStyle(
-            color: Colors.white, fontSize: 12.sp
-        ),),
+        child: Text(msg!.msg! , style: TextStyle(color: Colors.white, fontSize: 12.sp),),
       ),
     );
   }

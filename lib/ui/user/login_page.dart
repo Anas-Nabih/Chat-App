@@ -4,7 +4,7 @@ import 'package:chat_app/commanUtils/const.dart';
 import 'package:chat_app/commanUtils/preference/perfs.dart';
  import 'package:chat_app/commanUtils/utils.dart';
 import 'package:chat_app/res/colors.dart';
-import 'package:chat_app/services/user_model.dart';
+import 'package:chat_app/models/user_model.dart';
 import 'package:chat_app/ui/chat_screen/chat_screen.dart';
 import 'package:chat_app/ui/user/register_page.dart';
 import 'package:chat_app/widgets/custom_button.dart';
