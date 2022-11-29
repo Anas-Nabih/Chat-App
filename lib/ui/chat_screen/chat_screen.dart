@@ -8,17 +8,20 @@ import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 class ChatScreen extends StatelessWidget {
-  ChatScreen({Key? key}) : super(key: key);
+  ChatScreen({required this.email});
+
+  String email;
 
   String msgTime = DateFormat.jm().format(DateTime.now());
   final TextEditingController _controller = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   CollectionReference messages =
       FirebaseFirestore.instance.collection(CONST.messagesCollection);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: messages.orderBy(CONST.createdAt).snapshots(),
+        stream: messages.orderBy(CONST.createdAt,descending: true).snapshots(),
         builder: (context, snapshot) {
           List<MessageModel> messageList = [];
           for (int i = 0; i < snapshot.data!.docs.length; i++) {
@@ -35,9 +38,14 @@ class ChatScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ListView.builder(
+                          reverse: true,
+                          controller: _scrollController,
                           itemCount: messageList.length,
-                          itemBuilder: (context, index) =>
-                              ChatBubble(msg: messageList[index]),
+                          itemBuilder: (context, index) {
+                            print("focus here: email from const $email and firebase email is ${messageList[index].email}");
+                            return ChatBubble(msg: messageList[index],
+                                color: email == "anas@gmail.com" ? MColors.primaryColor: Colors.red );
+                          },
                         ),
                       ),
                       Padding(
@@ -49,8 +57,11 @@ class ChatScreen extends StatelessWidget {
                             messages.add({
                               "msg": val,
                               CONST.createdAt: DateTime.now(),
+                              "email":email
                             });
                             _controller.clear();
+                            _scrollController.jumpTo(0);
+
                           },
                           decoration: InputDecoration(
                               hintText: "Send Message",

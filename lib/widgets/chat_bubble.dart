@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class ChatBubble extends StatelessWidget {
-  const ChatBubble({required this.msg});
+ const ChatBubble({required this.msg, required this.color});
 
   final MessageModel msg;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +16,17 @@ class ChatBubble extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(top: 6, bottom: 6, left: 12, right: 25.w),
         padding: const EdgeInsets.all(12),
-        decoration: const BoxDecoration(
-            color: MColors.primaryColor,
-            borderRadius: BorderRadius.only(
+        decoration:  BoxDecoration(
+            color: color,
+            borderRadius:const BorderRadius.only(
               topLeft: Radius.circular(12),
               bottomRight: Radius.circular(12),
               topRight: Radius.circular(12),
-            )
+            )),
+        child: Text(
+          msg.msg!,
+          style: TextStyle(color: Colors.white, fontSize: 12.sp),
         ),
-        child: Text(msg!.msg! , style: TextStyle(color: Colors.white, fontSize: 12.sp),),
       ),
     );
   }

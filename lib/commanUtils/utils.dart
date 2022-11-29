@@ -5,11 +5,9 @@ class Utils{
   static void push({required BuildContext context, required Widget navigationScreen, bool replace = false}){
     if(replace){
       Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => navigationScreen),(Route route) => false);
-      print("remove all routes");
-    }else{
+     }else{
       Navigator.push(context, CupertinoPageRoute(builder: (context) => navigationScreen,));
-      print("save pervious routes");
-    }
+     }
   }
 
   static void pop(BuildContext context){

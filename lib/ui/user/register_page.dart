@@ -59,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           validation: (val){
                             if(val!.isEmpty) {
                               return "Please Enter Your Password";
-                            }else if(val!.length < 6){
+                            }else if(val.length < 6){
                               return "Password at least should be +6 chars";
                             }
                           },
@@ -126,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
      UserCredential user = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(
         email: email!, password: password!);
-     Utils.showSnackBar(context: context, msg: "Login Successfully");
+     Utils.showSnackBar(context: context, msg: "register Successfully");
 
   }
 

@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                           validation: (val) {
                             if (val!.isEmpty) {
                               return "Please Enter Your Password";
-                            } else if (val!.length < 6) {
+                            } else if (val.length < 6) {
                               return "Password at least should be +6 chars";
                             }
                           },
@@ -125,7 +125,12 @@ class _LoginPageState extends State<LoginPage> {
     };
     Prefs.setCurrentUser(jsonEncode(UserModel.fromJson(currentUser)));
     Utils.showSnackBar(context: context, msg: "login Successfully");
-    Utils.push(context: context,navigationScreen:  ChatScreen(),replace: true);
+    Prefs.getCurrentUser.then((value){
+      UserModel userObj = UserModel.fromJson(jsonDecode(value));
+      Utils.push(context: context,navigationScreen:  ChatScreen(email:userObj.email!),
+          replace: false);
+    });
+
   }
 
   void loginException(FirebaseAuthException e, BuildContext context) {
