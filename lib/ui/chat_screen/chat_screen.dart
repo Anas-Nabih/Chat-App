@@ -42,9 +42,8 @@ class ChatScreen extends StatelessWidget {
                           controller: _scrollController,
                           itemCount: messageList.length,
                           itemBuilder: (context, index) {
-                            print("focus here: email from const $email and firebase email is ${messageList[index].email}");
                             return ChatBubble(msg: messageList[index],
-                                color: email == "anas@gmail.com" ? MColors.primaryColor: Colors.red );
+                                color: messageList[index].email == email ? MColors.primaryColor: Colors.red );
                           },
                         ),
                       ),
