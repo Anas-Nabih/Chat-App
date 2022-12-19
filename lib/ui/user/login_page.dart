@@ -1,6 +1,7 @@
 import 'package:chat_app/commanUtils/utils.dart';
 import 'package:chat_app/res/colors.dart';
 import 'package:chat_app/ui/chat_screen/chat_screen.dart';
+import 'package:chat_app/ui/cubit/chat_cubit/chat_cubit.dart';
 import 'package:chat_app/ui/cubit/login_cubit/login_cubit.dart';
 import 'package:chat_app/ui/cubit/login_cubit/login_state.dart';
 import 'package:chat_app/ui/user/register_page.dart';
@@ -24,6 +25,7 @@ class LoginPage extends StatelessWidget {
         if (state is LoginLoading) {
           isLoading = true;
         } else if (state is LoginSuccess) {
+          BlocProvider.of<ChatCubit>(context).getMessages();
           Utils.push(
               context: context,
               navigationScreen: ChatScreen(email: email!),
