@@ -1,16 +1,15 @@
 import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:chat_app/commanUtils/const.dart';
 import 'package:chat_app/commanUtils/preference/perfs.dart';
 import 'package:chat_app/models/user_model.dart';
-import 'package:chat_app/ui/cubit/login_cubit/login_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:meta/meta.dart';
 
+part 'auth_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginInitial());
-
+class AuthCubit extends Cubit<AuthState> {
+  AuthCubit() : super(AuthInitial());
 
   Future<void> loginUser({required String email, required String password}) async{
     emit(LoginLoading());
@@ -27,13 +26,30 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginSuccess());
     }on FirebaseAuthException catch(ex){
       if (ex.code == CONST.userNotFound) {
-       emit( LoginFailure(errorMessage: 'No user found for that email.'));
+        emit( LoginFailure(errorMessage: 'No user found for that email.'));
       } else if (ex.code == CONST.wrongPassword) {
         LoginFailure(errorMessage:  'Wrong password provided for that user.');
-       }
+      }
     }catch(e){
       print(e.toString());
       emit(LoginFailure(errorMessage: "Some Thing Wrong Happened"));
+    }
+  }
+
+  Future<void> registerUser({required String email, required String password})async{
+    emit(RegisterLoading());
+    try{
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email!, password: password!);
+      emit(RegisterSuccess());
+    } on FirebaseAuthException catch (e){
+      if (e.code == CONST.weakPassword) {
+        emit(RegisterFailure(errorMessage: 'The password provided is too weak.'));
+      } else if (e.code == CONST.emailAlreadyUsed) {
+        emit(RegisterFailure(errorMessage: 'The account already exists for that email.'));
+      }
+    }
+    catch (e){
+      emit(RegisterFailure(errorMessage: "Some Thing Wrong Happened ${e.toString()}"));
     }
   }
 }

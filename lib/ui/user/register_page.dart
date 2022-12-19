@@ -1,7 +1,7 @@
 import 'package:chat_app/commanUtils/utils.dart';
 import 'package:chat_app/res/colors.dart';
-import 'package:chat_app/ui/cubit/register_cubit/register_cubit.dart';
-import 'package:chat_app/widgets/aleady_have_account.dart';
+import 'package:chat_app/ui/cubit/auth_cubit/auth_cubit.dart';
+ import 'package:chat_app/widgets/aleady_have_account.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +18,7 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<RegisterCubit, RegisterState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is RegisterLoading) {
           isLoading = true;
@@ -77,7 +77,7 @@ class RegisterPage extends StatelessWidget {
                     text: "Sigin Up",
                     onTapped: () async {
                       if (_formKey.currentState!.validate()) {
-                        BlocProvider.of<RegisterCubit>(context)
+                        BlocProvider.of<AuthCubit>(context)
                             .registerUser(email: email!, password: password!);
                       }
                     }),

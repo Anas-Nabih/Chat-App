@@ -1,9 +1,8 @@
 import 'package:chat_app/commanUtils/utils.dart';
 import 'package:chat_app/res/colors.dart';
+import 'package:chat_app/ui/blocs/auth/auth_bloc.dart';
 import 'package:chat_app/ui/chat_screen/chat_screen.dart';
 import 'package:chat_app/ui/cubit/chat_cubit/chat_cubit.dart';
-import 'package:chat_app/ui/cubit/login_cubit/login_cubit.dart';
-import 'package:chat_app/ui/cubit/login_cubit/login_state.dart';
 import 'package:chat_app/ui/user/register_page.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_text_form_field.dart';
@@ -20,7 +19,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginCubit, LoginState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is LoginLoading) {
           isLoading = true;
@@ -83,8 +82,7 @@ class LoginPage extends StatelessWidget {
                     text: "Sigin in",
                     onTapped: () async {
                       if (_formKey.currentState!.validate()) {
-                        BlocProvider.of<LoginCubit>(context)
-                            .loginUser(email: email!, password: password!);
+                        BlocProvider.of<AuthBloc>(context).add(LoginEvent(email: email!, password: password!));
                       }
                     }),
                 SizedBox(height: 4.h),
