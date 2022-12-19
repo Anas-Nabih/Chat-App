@@ -1,3 +1,4 @@
+import 'package:chat_app/app_bloc_observer.dart';
 import 'package:chat_app/ui/blocs/auth/auth_bloc.dart';
 import 'package:chat_app/ui/cubit/auth_cubit/auth_cubit.dart';
 import 'package:chat_app/ui/cubit/chat_cubit/chat_cubit.dart';
@@ -10,8 +11,11 @@ import 'package:sizer/sizer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+
+  Bloc.observer = AppBlocObserver();
   runApp(const ChatApp());
-}
+ }
 
 class ChatApp extends StatelessWidget {
   const ChatApp({Key? key}) : super(key: key);

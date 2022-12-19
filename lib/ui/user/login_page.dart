@@ -25,10 +25,7 @@ class LoginPage extends StatelessWidget {
           isLoading = true;
         } else if (state is LoginSuccess) {
           BlocProvider.of<ChatCubit>(context).getMessages();
-          Utils.push(
-              context: context,
-              navigationScreen: ChatScreen(email: email!),
-              replace: false);
+          Utils.push(context: context, navigationScreen: ChatScreen(email: email!), replace: false);
           isLoading = false;
         } else if (state is LoginFailure) {
           Utils.showSnackBar(context: context, msg: state.errorMessage);
