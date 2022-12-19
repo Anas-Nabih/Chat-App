@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:chat_app/commanUtils/const.dart';
+import 'package:chat_app/commanUtils/preference/perfs.dart';
+import 'package:chat_app/models/user_model.dart';
+import 'package:chat_app/ui/cubit/login_cubit/login_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:meta/meta.dart';
 
-part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitial());
@@ -13,6 +16,14 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginLoading());
     try{
       UserCredential user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email!, password: password!);
+      Map<String, dynamic> currentUser = {
+        "name":user.user?.displayName ?? "null",
+        "email":user.user!.email ?? "null",
+        "img":user.user!.photoURL ?? "null",
+        "phone":user.user!.phoneNumber ?? "null",
+      };
+      Prefs.setCurrentUser(jsonEncode(UserModel.fromJson(currentUser)));
+
       emit(LoginSuccess());
     }on FirebaseAuthException catch(ex){
       if (ex.code == CONST.userNotFound) {

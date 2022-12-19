@@ -12,6 +12,7 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       onChanged: onChanged ?? (val){},
       validator: validation ?? (val){},
+      style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: const TextStyle(color: Colors.white),
