@@ -1,16 +1,18 @@
-# chat_app
+# Chat App Built with Firebase, Bloc & Cubit patterns.
 
-A new Flutter project.
+- The chat application allows chatting by creating a new account on Firebase.
 
-## Getting Started
+- It is Built with Consideration Flutter clean code and using bloc and cubit patterns to understand both.
 
-This project is a starting point for a Flutter application.
+**Packages i using:**
 
-A few resources to get you started if this is your first Flutter project:
+- firebase_core: [link](https://pub.dev/packages/firebase_core)
+- firebase_auth: [link](https://pub.dev/packages/firebase_auth)
+- cloud_firestore: [link](https://pub.dev/packages/cloud_firestore)
+- flutter_bloc: [link](https://pub.dev/packages/flutter_bloc)
+- sizer: [link](https://pub.dev/packages/sizer)
+- modal_progress_hud_nsn: [link](https://pub.dev/packages/modal_progress_hud_nsn)
+- shared_preferences: [link](https://pub.dev/packages/shared_preferences)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
