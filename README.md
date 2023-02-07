@@ -4,7 +4,7 @@
 
 - It is Built with Consideration Flutter clean code and using bloc and cubit patterns to understand both.
 
-**Packages i using:**
+**Packages i use:**
 
 - firebase_core: [link](https://pub.dev/packages/firebase_core)
 - firebase_auth: [link](https://pub.dev/packages/firebase_auth)
