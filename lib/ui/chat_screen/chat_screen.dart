@@ -1,20 +1,30 @@
-import 'package:chat_app/commanUtils/const.dart';
 import 'package:chat_app/models/message_model.dart';
 import 'package:chat_app/res/colors.dart';
 import 'package:chat_app/ui/cubit/chat_cubit/chat_cubit.dart';
 import 'package:chat_app/widgets/chat_bubble.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class ChatScreen extends StatelessWidget {
-  ChatScreen({required this.email});
+  ChatScreen({super.key, required this.email});
 
   String email;
   String message = "";
   bool isLoading = true;
 
+
+  String groupChatId = "";
+
+  getGroupChatId({required String currentId,required String peerId}){
+    if (currentId.hashCode <= peerId.hashCode) {
+      groupChatId = '$currentId-$peerId';
+    } else {
+      groupChatId = '$peerId-$currentId';
+    }
+
+    print("Group Chat Id: $groupChatId");
+  }
   List<MessageModel> messagesList = [];
 
   @override
@@ -23,6 +33,7 @@ class ChatScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Chat"),
         centerTitle: true,
+        leading: const SizedBox(),
         backgroundColor: MColors.primaryColor,
       ),
       body: Column(
@@ -41,9 +52,8 @@ class ChatScreen extends StatelessWidget {
                 return !isLoading
                     ? ListView.builder(
                         reverse: true,
-                        physics: BouncingScrollPhysics(),
-                        controller: BlocProvider.of<ChatCubit>(context)
-                            .scrollController,
+                        physics: const BouncingScrollPhysics(),
+                        controller: BlocProvider.of<ChatCubit>(context).scrollController,
                         itemCount: messagesList.length,
                         itemBuilder: (context, index) {
                           return ChatBubble(
@@ -53,7 +63,7 @@ class ChatScreen extends StatelessWidget {
                                   : Colors.red);
                         },
                       )
-                    : Center(child: CircularProgressIndicator());
+                    : const Center(child: CircularProgressIndicator());
               },
             ),
           ),
@@ -62,18 +72,18 @@ class ChatScreen extends StatelessWidget {
             child: TextField(
               controller: BlocProvider.of<ChatCubit>(context).controller,
               onSubmitted: (msg) {
-                if(msg != "") {
+                if (msg != "") {
                   BlocProvider.of<ChatCubit>(context)
                       .sendMessage(msg: msg, email: email);
                   message = "";
                 }
               },
-              onChanged: (msg)=> message = msg,
+              onChanged: (msg) => message = msg,
               decoration: InputDecoration(
                   hintText: "Send Message",
                   suffixIcon: GestureDetector(
                       onTap: () {
-                        if(message !="") {
+                        if (message != "") {
                           BlocProvider.of<ChatCubit>(context)
                               .sendMessage(msg: message, email: email);
                           message = "";

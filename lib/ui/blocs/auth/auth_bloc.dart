@@ -8,7 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
 part 'auth_event.dart';
-
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -17,27 +16,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (event is LoginEvent) {
         emit(LoginLoading());
         try {
-          UserCredential user = await FirebaseAuth.instance
-              .signInWithEmailAndPassword(
-                  email: event.email, password: event.password);
+          UserCredential user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: event.email, password: event.password);
           Map<String, dynamic> currentUser = {
-            "name": user.user?.displayName ?? "null",
-            "email": user.user!.email ?? "null",
-            "img": user.user!.photoURL ?? "null",
-            "phone": user.user!.phoneNumber ?? "null",
+            "id": user.user?.uid ?? "null",
+            "email": user.user?.email ?? "null",
+            "phone": user.user?.phoneNumber ?? "null",
+            "displayName": user.user?.displayName ?? "null",
+            "photoUrl": user.user?.photoURL ?? "null",
+            "lastMsg": user.user?.displayName ?? "null",
           };
+
+          Prefs.setCurrentUser(jsonEncode(UserModel.fromJson(currentUser)));
           Prefs.setCurrentUser(jsonEncode(UserModel.fromJson(currentUser)));
 
           emit(LoginSuccess());
         } on FirebaseAuthException catch (ex) {
-           if (ex.code == CONST.userNotFound) {
+          if (ex.code == CONST.userNotFound) {
             emit(LoginFailure(errorMessage: 'No user found for that email.'));
           } else if (ex.code == CONST.wrongPassword) {
             emit(LoginFailure(
                 errorMessage: 'Wrong password provided for that user.'));
           }
         } catch (e) {
-           emit(LoginFailure(errorMessage: "Some Thing Wrong Happened"));
+          print("login error: $e");
+          emit(LoginFailure(errorMessage: "Some Thing Wrong Happened"));
         }
       } else if (event is RegisterEvent) {
         emit(RegisterLoading());

@@ -1,8 +1,8 @@
 import 'package:chat_app/commanUtils/utils.dart';
 import 'package:chat_app/res/colors.dart';
 import 'package:chat_app/ui/blocs/auth/auth_bloc.dart';
-import 'package:chat_app/ui/chat_screen/chat_screen.dart';
 import 'package:chat_app/ui/cubit/chat_cubit/chat_cubit.dart';
+import 'package:chat_app/ui/home_screen/home_screen.dart';
 import 'package:chat_app/ui/user/register_page.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_text_form_field.dart';
@@ -25,7 +25,8 @@ class LoginPage extends StatelessWidget {
           isLoading = true;
         } else if (state is LoginSuccess) {
           BlocProvider.of<ChatCubit>(context).getMessages();
-          Utils.push(context: context, navigationScreen: ChatScreen(email: email!), replace: false);
+          // Utils.push(context: context, navigationScreen: ChatScreen(email: email!), replace: true);
+          Utils.push(context: context, navigationScreen: HomeScreen(), replace: true);
           isLoading = false;
         } else if (state is LoginFailure) {
           Utils.showSnackBar(context: context, msg: state.errorMessage);
@@ -76,7 +77,7 @@ class LoginPage extends StatelessWidget {
                     )),
                 SizedBox(height: 8.h),
                 CustomBtn(
-                    text: "Sigin in",
+                    text: "Sign in",
                     onTapped: () async {
                       if (_formKey.currentState!.validate()) {
                         BlocProvider.of<AuthBloc>(context).add(LoginEvent(email: email!, password: password!));
