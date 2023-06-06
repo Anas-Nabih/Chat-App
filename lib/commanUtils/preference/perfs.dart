@@ -19,4 +19,10 @@ class Prefs{
 
   static Future<String> get getCurrentUser =>
       PreferencesHelper.getString(CONST.CURRENT_USER_KEY);
+
+  static Future setUserUid(String value) =>
+      PreferencesHelper.setString(CONST.userUID, value);
+
+  static Future<String> get getUserUid =>
+      PreferencesHelper.getString(CONST.userUID);
 }

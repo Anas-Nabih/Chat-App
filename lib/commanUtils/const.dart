@@ -8,7 +8,9 @@ class CONST{
   static const String userNotFound = "user-not-found";
   static const String wrongPassword = "wrong-password";
 
+
   static const String messagesCollection = "messages";
   static const String usersCollection = "users";
   static const String createdAt = "createdAt";
+  static const String userUID = "userUID";
 }
